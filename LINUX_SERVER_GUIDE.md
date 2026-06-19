@@ -24,6 +24,78 @@ chmod +x run_server.sh
 
 단, 위 명령이 성공하려면 먼저 이 워크스페이스 전체가 Ubuntu의 `/opt/safety_monitor` 폴더에 있어야 합니다. 아직 옮기지 않았다면 아래의 `프로젝트를 Ubuntu로 옮기는 방법`을 먼저 진행합니다.
 
+## VMware Ubuntu를 다시 켠 뒤 서버 재실행
+
+이미 한 번 설치와 `pip install -r requirements-server.txt`까지 끝낸 상태라면, VMware Ubuntu를 다시 켠 뒤에는 전체 설치를 반복하지 않아도 됩니다.
+
+Ubuntu 터미널을 열고 아래 순서대로 실행합니다.
+
+```bash
+cd /opt/safety_monitor
+. .venv/bin/activate
+./run_server.sh
+```
+
+정상 실행되면 터미널에 서버 주소 목록이 출력되고, 서버는 `0.0.0.0:8000`에서 대기합니다. 이 터미널은 서버 실행 창이므로 닫지 않습니다.
+
+서버가 켜졌는지 Ubuntu 안에서 확인하려면 새 터미널을 하나 더 열고 실행합니다.
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Windows 뷰어/클라이언트에서 접속할 주소를 다시 확인하려면 Ubuntu에서 실행합니다.
+
+```bash
+hostname -I
+```
+
+예를 들어 `hostname -I` 결과에 `192.168.0.35`가 보이면 Windows 브라우저에서 먼저 확인합니다.
+
+```text
+http://192.168.0.35:8000/health
+```
+
+Windows 뷰어와 클라이언트에는 `/health`를 빼고 아래처럼 입력합니다.
+
+```text
+http://192.168.0.35:8000
+```
+
+주의할 점:
+
+- VMware를 다시 켜면 Ubuntu IP가 바뀔 수 있습니다.
+- IP가 바뀌면 Windows 뷰어/클라이언트의 서버 URL도 새 IP로 다시 입력해야 합니다.
+- Windows에서 `127.0.0.1`을 입력하면 Ubuntu VM이 아니라 Windows 자기 자신을 보게 됩니다.
+
+서버 코드가 업데이트된 경우에는 실행 전에 아래처럼 최신 코드를 받고 의존성을 한 번 더 맞춥니다.
+
+```bash
+cd /opt/safety_monitor
+git pull
+. .venv/bin/activate
+python -m pip install -r requirements-server.txt
+./run_server.sh
+```
+
+서버가 이미 실행 중인 터미널이 있다면 `Ctrl+C`로 중지한 뒤 다시 실행합니다.
+
+```bash
+./run_server.sh
+```
+
+접속이 안 될 때 확인 순서:
+
+```bash
+cd /opt/safety_monitor
+. .venv/bin/activate
+curl http://127.0.0.1:8000/health
+hostname -I
+sudo ufw status
+```
+
+Ubuntu 안의 `curl http://127.0.0.1:8000/health`는 성공하는데 Windows에서 안 열리면 VMware 네트워크가 `Bridged`인지, Windows에서 입력한 IP가 현재 `hostname -I` 결과와 같은지 확인합니다.
+
 ## 프로젝트를 Ubuntu로 옮기는 방법
 
 가장 권장하는 방법은 Git으로 받는 것입니다. 저장소 URL을 알고 있고 Ubuntu 서버가 인터넷 또는 사내 Git 서버에 접근할 수 있으면 이 방법이 가장 깔끔합니다.
