@@ -15,6 +15,7 @@
 
 - 전체 구조: [../README.md](../README.md)
 - 실행 절차: [../RUN_GUIDE.md](../RUN_GUIDE.md)
+- Ubuntu 서버 실행: [../LINUX_SERVER_GUIDE.md](../LINUX_SERVER_GUIDE.md)
 - 서버 DB 구조: [../DB_SCHEMA.md](../DB_SCHEMA.md)
 - 이벤트 JSON 계약: [ai/event_json_schema.md](./ai/event_json_schema.md)
 - 발표/시연 체크: [demo_checklist.md](./demo_checklist.md)

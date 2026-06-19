@@ -9,9 +9,19 @@ CCTV/웹캠 기반 안전 모니터링 시스템입니다. 전체 구조는 `클
 자세한 실행 절차는 [RUN_GUIDE.md](RUN_GUIDE.md)를 기준으로 합니다.
 
 
+## 실행 환경 구분
+
+이 워크스페이스는 원래 Windows에서 서버/뷰어/클라이언트를 모두 실행하는 것을 기준으로 만들어졌습니다. 서버만 Ubuntu로 옮기는 경우에는 역할을 아래처럼 나눕니다.
+
+- Ubuntu: 중앙 FastAPI 서버만 실행합니다.
+- Windows: Flutter 뷰어와 Flutter 클라이언트를 계속 실행합니다.
+- 뷰어/클라이언트의 서버 URL은 `http://<Ubuntu 서버 IP>:8000`을 사용합니다.
+
+Ubuntu 서버 실행 절차는 [LINUX_SERVER_GUIDE.md](LINUX_SERVER_GUIDE.md)를 기준으로 합니다. Windows 전체 실행 절차는 [RUN_GUIDE.md](RUN_GUIDE.md)를 기준으로 합니다.
+
 ## 필수 외부 의존성
 
-`install_dependencies.bat`은 Python 가상환경, pip 패키지, Flutter pub 패키지를 설치합니다. Windows 앱 빌드에 필요한 외부 도구는 사용자가 먼저 설치해야 합니다.
+`install_dependencies.bat`은 Windows 전체 실행용 도구입니다. Python 가상환경, pip 패키지, Flutter pub 패키지를 설치합니다. Windows 앱 빌드에 필요한 외부 도구는 사용자가 먼저 설치해야 합니다.
 
 필수 항목:
 
@@ -27,6 +37,14 @@ CCTV/웹캠 기반 안전 모니터링 시스템입니다. 전체 구조는 `클
   - Windows 10/11 SDK
   - CMake tools for Windows
 - Git: `git pull`, `core.longpaths` 설정, 협업용으로 필요합니다.
+
+Ubuntu 서버만 실행할 때 필요한 항목:
+
+- Ubuntu 24.04 LTS 권장
+- Python 3.12, `python3.12-venv`, `pip`
+- OpenCV 런타임 라이브러리: `libgl1`, `libglib2.0-0t64`
+- Git
+- TCP 8000 방화벽 허용
 
 AI 클라이언트에서 TensorRT engine을 만들거나 CUDA 추론을 사용할 경우 다음 항목도 필요합니다.
 
@@ -187,7 +205,7 @@ UI 흐름:
 
 ## 실행 요약
 
-처음 받은 PC에서는 아래 순서를 권장합니다.
+Windows에서 전체 실행하는 PC에서는 아래 순서를 권장합니다.
 
 ```bat
 check_environment.bat
@@ -209,6 +227,21 @@ run_client.bat
 ```text
 http://<서버PC IPv4>:8000
 ```
+
+Ubuntu에서 서버만 실행할 때:
+
+```bash
+sudo apt update
+sudo apt install -y git python3.12 python3.12-venv python3-pip libgl1 libglib2.0-0t64
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-server.txt
+chmod +x run_server.sh
+./run_server.sh
+```
+
+자세한 Ubuntu 절차, 방화벽, `systemd` 등록 방법은 [LINUX_SERVER_GUIDE.md](LINUX_SERVER_GUIDE.md)를 확인합니다.
 
 더 자세한 절차와 오류 대응은 [RUN_GUIDE.md](RUN_GUIDE.md)를 확인합니다.
 
@@ -246,8 +279,13 @@ Downloads
 - `run_viewer.bat`: 뷰어 실행
 - `setup_server_firewall.bat`: 서버 PC TCP 8000 방화벽 허용
 
+## 주요 Linux 스크립트
+
+- `run_server.sh`: Ubuntu/Linux에서 중앙 서버 실행
+
 ## 참고 문서
 
 - [RUN_GUIDE.md](RUN_GUIDE.md): 실행/빌드 절차
+- [LINUX_SERVER_GUIDE.md](LINUX_SERVER_GUIDE.md): Ubuntu 서버 실행 절차
 - [DB_SCHEMA.md](DB_SCHEMA.md): DB 테이블 구조
 - [docs/FASTAPI_PROJECT_SUMMARY.md](docs/FASTAPI_PROJECT_SUMMARY.md): FastAPI 사용 구조 설명

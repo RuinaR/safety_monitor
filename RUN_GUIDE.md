@@ -1,6 +1,8 @@
 # 실행/빌드 가이드
 
-이 문서는 다른 PC에서 `git pull` 이후 서버, 뷰어, 클라이언트를 빌드하고 실행 테스트할 수 있도록 정리한 절차입니다.
+이 문서는 Windows PC에서 `git pull` 이후 서버, 뷰어, 클라이언트를 빌드하고 실행 테스트할 수 있도록 정리한 절차입니다.
+
+서버만 Ubuntu에서 실행하려면 [LINUX_SERVER_GUIDE.md](LINUX_SERVER_GUIDE.md)를 먼저 확인합니다. Ubuntu 서버 전환 후에도 뷰어/클라이언트는 이 문서의 Windows 절차대로 실행하되, 서버 URL만 `http://<Ubuntu 서버 IP>:8000`으로 입력합니다.
 
 권장 실행 순서는 항상 다음과 같습니다.
 

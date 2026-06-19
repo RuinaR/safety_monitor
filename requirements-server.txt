@@ -1,5 +1,5 @@
-# Safety Monitor central server runtime only
-# Python 3.12 recommended on Windows.
+# Safety Monitor central server runtime only.
+# Python 3.12 is recommended on Windows and Ubuntu.
 
 fastapi==0.136.1
 starlette==1.0.0

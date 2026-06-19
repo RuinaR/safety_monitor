@@ -42,7 +42,7 @@ safety_monitor_server/data/source_previews/
 
 ## 실행
 
-루트에서 실행합니다.
+Windows에서는 루트에서 실행합니다.
 
 ```bat
 run_server.bat
@@ -54,3 +54,18 @@ run_server.bat
 cd safety_monitor_server
 ..\.venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
+
+Ubuntu/Linux에서는 루트에서 실행합니다.
+
+```bash
+./run_server.sh
+```
+
+직접 실행할 때:
+
+```bash
+cd safety_monitor_server
+../.venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000 --no-access-log
+```
+
+Ubuntu 서버 준비, 방화벽, `systemd` 서비스 등록은 루트의 `LINUX_SERVER_GUIDE.md`를 확인합니다.

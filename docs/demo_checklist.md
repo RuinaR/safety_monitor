@@ -2,20 +2,24 @@
 
 ## 1. 사전 확인
 
-- [ ] 저장소가 C/D 루트 근처의 짧은 경로에 있는지 확인
-- [ ] `check_environment.bat` 실행 후 Python/Flutter/Visual Studio C++/Windows SDK 확인
-- [ ] `install_dependencies.bat all` 성공 확인
+- [ ] Windows 전체 실행이면 저장소가 C/D 루트 근처의 짧은 경로에 있는지 확인
+- [ ] Windows 전체 실행이면 `check_environment.bat` 실행 후 Python/Flutter/Visual Studio C++/Windows SDK 확인
+- [ ] Windows 전체 실행이면 `install_dependencies.bat all` 성공 확인
+- [ ] Ubuntu 서버 실행이면 `python3.12 -m venv .venv`와 `python -m pip install -r requirements-server.txt` 성공 확인
+- [ ] Ubuntu 서버 실행이면 TCP 8000 방화벽 허용 확인
 - [ ] 클라이언트 모델 파일 확인: `safety_monitor_client/embedded_backend/app/analysis/models/weights/best.pt` 또는 `best.engine`
 - [ ] 서버 PC IPv4 주소 확인
 - [ ] 다른 PC에서 `http://<서버IP>:8000/health` 접근 가능 여부 확인
 
 ## 2. 서버
 
-- [ ] `run_server.bat` 실행
+- [ ] Windows 서버이면 `run_server.bat` 실행
+- [ ] Ubuntu 서버이면 `./run_server.sh` 또는 `systemctl start safety-monitor-server` 실행
 - [ ] 서버 콘솔에 `0.0.0.0:8000` 바인딩 확인
 - [ ] `GET /health` 응답 확인
 - [ ] `GET /api/sources` 응답 확인
-- [ ] 필요 시 `setup_server_firewall.bat` 관리자 권한 실행
+- [ ] Windows 서버는 필요 시 `setup_server_firewall.bat` 관리자 권한 실행
+- [ ] Ubuntu 서버는 필요 시 `sudo ufw allow 8000/tcp` 실행
 
 ## 3. 뷰어
 
